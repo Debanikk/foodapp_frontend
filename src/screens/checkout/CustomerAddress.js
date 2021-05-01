@@ -43,7 +43,7 @@ const styles = muiBaseTheme => ({
 });
 
 
-function TestCard( props ) {
+function CustomerAddress( props ) {
     const classes = props.classes;
     const address = props.address;   
     const [value, setValue] = React.useState(0);
@@ -60,11 +60,11 @@ function TestCard( props ) {
       <Card className={classes.card} key={address.id}>
         <CardContent className={classes.content}>
           <Typography
-            className={"MuiTypography--heading"}
+            style={{width:"100%",textTransform:"capitalize"}}
             variant={"h6"}
             gutterBottom
           >
-            {address.flat_building_name} {address.locality} <br />
+            {address.flat_building_name} <br /> {address.locality} <br />
             {address.city} <br />
             {address.state.state_name} <br />
             {address.pincode} <br />
@@ -72,7 +72,7 @@ function TestCard( props ) {
           <Divider className={classes.divider} light />          
         </CardContent>
         <CardActions disableSpacing className={classes.CardAction}>
-          <IconButton aria-label="Select Address" onClick={() => onAddressClick(address) }>            
+          <IconButton className="selectAddresscircle" aria-label="Select Address" onClick={() => onAddressClick(address) }>            
             {address.id === sessionStorage.getItem("selected") ? <CheckCircle  style={{color:"#009000"}}/> : <CheckCircle style={{color:"#999999"}} />}            
           </IconButton>
         </CardActions>
@@ -81,4 +81,4 @@ function TestCard( props ) {
   );
 }
 
-export default withStyles(styles)(TestCard);
+export default withStyles(styles)(CustomerAddress);

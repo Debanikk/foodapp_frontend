@@ -9,3 +9,12 @@
     transform:translate(-50%, -50%);
     width:300px;    
 }
+
+.gridListMain{
+    display: flex;
+    flex-wrap:nowrap !important;
+    transform: translateZ(0);
+    height:400px;
+    width: 1000px !important;
+    
+    }

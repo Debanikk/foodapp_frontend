@@ -5,6 +5,8 @@ import CustomerAddress from './CustomerAddress';
 import SummaryCard from './SummaryCard';
 
 import Grid from '@material-ui/core/Grid';
+import GridList from '@material-ui/core/GridList';
+import {GridListTile} from '@material-ui/core';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -75,7 +77,7 @@ const styles = foodAppCheckoutBaseTheme => ({
 
 const baseURL = "http://localhost:8080/api/";
 //This needs to be replaced with sessionStorage
-const access_token = "eyJraWQiOiI5ZmIzNDkyOC1hYTkzLTQ1ZjAtOTVhNi0wYzg5YjNkZmQ1MmQiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiIzNzU2ZDRjYy0wODZmLTQxZWEtYWE5Mi02OTBjZDFkNWFmNzIiLCJpc3MiOiJodHRwczovL0Zvb2RPcmRlcmluZ0FwcC5pbyIsImV4cCI6MTU2MTkyNSwiaWF0IjoxNTYxODk2fQ.28egiqghFsWqlcyH8QWbU9-JsP-fioXXwslVfelHoCmJyo95mFVb9PHgmdRVTrTqizPOIYwk3hscvdrXM-gikw";
+const access_token = sessionStorage.getItem("access-token");
 const req_header = {
   "Accept": "application/json;charset=UTF-8",
   "authorization": "Bearer " +  access_token,
@@ -120,7 +122,8 @@ class Checkout extends Component{
       saveAddressError : 'dispNone',
       saveAddressErrorMsg : '',
       checkOutAddressRequired : 'dispNone',
-      selectedAddress : ""
+      selectedAddress : "",
+      resDetails: null
     };
   }
 
@@ -128,11 +131,42 @@ class Checkout extends Component{
     //this.getAddresses(baseURL, access_token);
     //this.getPaymentMethods();
     //States pending
+    this.mounted = true;
   }
+
+  componentWillMount(){
+    try{
+      this.setState({resDetails:JSON.parse(sessionStorage.getItem("restaurantDetails"))});
+      this.getAddresses(baseURL, access_token);
+      this.getPaymentMethods();
+      this.getStates();
+    } catch {
+      this.mounted = false;
+    }
+  }
+
+  getStates(){
+    const url = baseURL + 'states'
+    const that = this;
+    
+    //API call function invoked from Utils.js
+    Utils.makeApiCall(
+      url, 
+      null,
+      null,
+      Constants.ApiRequestTypeEnum.GET,
+      null,
+      responseText => {
+        that.setState({
+          dataStates : JSON.parse(responseText).states
+        })
+      }
+    )
+    }
 
   placeOrderHandler = () => {      
     let dataItem = [];      
-    if(this.state.selectedAddress == ""){
+    if(this.state.selectedAddress === ""){
       this.setState({saveOrderResponse : "Please select Address"})        
       this.openMessageHandler();   
       return;                        
@@ -170,7 +204,7 @@ class Checkout extends Component{
     })
 
     xhrCheckout.open("POST", this.props.baseUrl + "order");
-    xhrCheckout.setRequestHeader("Authorization", "Bearer " + access_token); //sessionStorage.getItem('access-token')
+    xhrCheckout.setRequestHeader("Authorization", "Bearer " + access_token);
     xhrCheckout.setRequestHeader("Content-Type", "application/json");
     xhrCheckout.setRequestHeader("Cache-Control", "no-cache");
     xhrCheckout.setRequestHeader("Access-Control-Allow-Origin", "*");  
@@ -188,7 +222,7 @@ class Checkout extends Component{
         }
     })
     xhrAddresses.open("GET", baseURL + "address/customer");
-    xhrAddresses.setRequestHeader("Authorization", "Bearer " + access_token); //sessionStorage.getItem('access-token')
+    xhrAddresses.setRequestHeader("Authorization", "Bearer " + access_token); 
     xhrAddresses.setRequestHeader("Content-Type", "application/json");
     xhrAddresses.setRequestHeader("Cache-Control", "no-cache");
     xhrAddresses.setRequestHeader("Access-Control-Allow-Origin", "*");  
@@ -305,6 +339,24 @@ class Checkout extends Component{
                 </AppBar>
                 {this.state.value === 0 && 
                     <TabContainer>
+                      {this.state.dataAddress.length===0?
+                        <Grid
+                          container
+                          direction="row"
+                          justify="space-between"
+                          alignItems="center"
+                          className={this.props.root}
+                        >
+                          <Grid container spacing={5}>
+                            <GridList cellHeight={"auto"} className="gridListMain">
+                              <GridListTile style={{width:"100%",marginTop:"4%"}} >
+                                  <span style={{fontSize:"20px"}}>There are no saved addresses! You can save an address using the "New Address" tab or using your "Profile" Menu</span>
+                              </GridListTile>
+                            </GridList>  
+                          </Grid>
+                        </Grid>
+                        
+                        :
                     <Grid
                       container
                       direction="row"
@@ -313,15 +365,17 @@ class Checkout extends Component{
                       className={this.props.root}
                       >
                         <Grid container spacing={10}>
-                          {
-                            this.state.dataAddress.map((val, idx) => ( 
-                              <Grid item xs={4} key={val.id}>
-                                <CustomerAddress address={val} key={val.id + "_" + idx} changeAddress={this.addressChangeHandler}/>                                 
-                              </Grid>                                       
-                          ))            
-                          }
+                          <GridList cellHeight={"auto"} className="gridListMain">
+                            {
+                              this.state.dataAddress.map((val, idx) => ( 
+                                <Grid item xs={4} key={val.id}>
+                                  <CustomerAddress address={val} key={val.id + "_" + idx} changeAddress={this.addressChangeHandler}/>                                 
+                                </Grid>                                       
+                            ))            
+                            }
+                          </GridList>
                       </Grid>
-                    </Grid>
+                    </Grid>}
                     </TabContainer>
                 },
                 {this.state.value === 1 && 
@@ -474,7 +528,7 @@ class Checkout extends Component{
                   </Stepper> 
                 </div>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={8} md={3}>
               <SummaryCard className={classes.summaryCard} placeOrderHandler = {this.placeOrderHandler}
                 key="test"
                 index="1"

@@ -16,10 +16,16 @@ const SummaryCard = function(props) {
     const index = props.index;
     const classes = props.classes;
     let data = JSON.parse(localStorage.getItem("orders"));
-    let total = "1450"; //localStorage.getItem("OrderDataTotal");
+    let total = JSON.parse(localStorage.getItem("OrderDataTotal"));
+    let restaurant_Name = JSON.parse(localStorage.getItem("restaurant_Name"));
     return(
-        <Card>        
-            <CardHeader title="Summary" />
+        <Card className="summaryCardMain">        
+            <CardHeader className="addressCardHeader" title="Summary" >
+                <Typography variant="h4">
+
+                </Typography>
+            </CardHeader>
+            <div style={{marginLeft:"3%",fontSize:"120%", color:"black"}}>{restaurant_Name}</div>
                 <CardContent>
                     <Grid
                         container
@@ -27,21 +33,26 @@ const SummaryCard = function(props) {
                         justify="space-between"
                         alignItems="center">                     
                             {SummaryCardTempData.map((item, index) => 
-                                        <Grid container item xs={12} spacing={1} key={index}>
-                                        <Grid item xs={1}>
-                                            {item.type === 'VEG' ?  <FiberManualRecord style={{ color: "#008000" }}/> : <FiberManualRecord style={{ color: "#b20505" }}/>}
-                                        </Grid>
-                                        <Grid item xs={5}>
-                                            
-                                            {item.name}                            
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            {item.qty}                            
-                                        </Grid>
-                                        <Grid item xs={3}>
-                                            {item.price}                            
-                                        </Grid>
-                                        </Grid>                                                
+                                <Grid container item xs={12} spacing={1} key={index}>
+                                    <Grid item xs={1}>
+                                        {item.type === 'VEG' ?  <FiberManualRecord style={{ color: "#008000" }}/> : <FiberManualRecord style={{ color: "#b20505" }}/>}
+                                    </Grid>
+                                    <Grid item xs={5}>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {item.name}
+                                        </Typography>                            
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {item.qty}
+                                        </Typography>                          
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <Typography variant="body2" color="textSecondary">
+                                            {item.price}
+                                        </Typography> 
+                                    </Grid>
+                                </Grid>                                                
                             )} 
                             <Grid container item xs={12}>
                                 <Grid item xs={12}>                    
@@ -52,13 +63,13 @@ const SummaryCard = function(props) {
                             <Grid container item xs={12} spacing={3}>
                                 <Grid item xs={1}></Grid>
                                     <Grid item xs={5}>
-                                        <Typography variant="h6">
+                                        <Typography variant="subtitle1" color="textPrimary">
                                         Net Amount
                                         </Typography>
                                     </Grid>
                                 <Grid item xs={3}></Grid>
                                     <Grid item xs={3}>
-                                        <Typography variant="h6">                                                       
+                                        <Typography variant="subtitle1" color="textPrimary">                                                       
                                             {total}
                                         </Typography>
                                     </Grid>
