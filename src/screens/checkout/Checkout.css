@@ -1,9 +1,11 @@
-.login {
+.newAddress {
     margin-top : 20%;
     margin-left : 50%;
     margin-right : auto;
     margin-bottom : auto;
     margin-right:-50%;
+    padding-top: 20%;
+    padding-left: 10%;
     transform:translate(-50%, -50%);
     width:300px;    
 }

@@ -78,7 +78,9 @@ searchRestaurantsByName = event => {
         
         return (
             <div>
-               <Header logoutHandler={this.loginredirect} baseUrl={this.props.baseUrl} searchRestaurantsByName={this.searchRestaurantsByName} showSearch={true} history={this.props.history} />
+               <Header  logoutHandler={this.loginredirect} baseUrl={this.props.baseUrl} 
+                        searchRestaurantsByName={this.searchRestaurantsByName} 
+                        showSearch={true} history={this.props.history} />
                 Home page
             </div>
         )
