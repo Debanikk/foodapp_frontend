@@ -32,7 +32,7 @@ const SummaryCard = function(props) {
                         direction="row"
                         justify="space-between"
                         alignItems="center">                     
-                            {SummaryCardTempData.map((item, index) => 
+                            {data.map((item, index) => 
                                 <Grid container item xs={12} spacing={1} key={index}>
                                     <Grid item xs={1}>
                                         {item.type === 'VEG' ?  <FiberManualRecord style={{ color: "#008000" }}/> : <FiberManualRecord style={{ color: "#b20505" }}/>}
