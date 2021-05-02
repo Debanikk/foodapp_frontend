@@ -20,7 +20,7 @@ const SummaryCard = function(props) {
     let restaurant_Name = JSON.parse(localStorage.getItem("restaurant_Name"));
     return(
         <Card className="summaryCardMain">        
-            <CardHeader className="addressCardHeader" title="Summary" >
+            <CardHeader className="summaryCardHeader" title="Summary" >
                 <Typography variant="h4">
 
                 </Typography>
@@ -31,7 +31,7 @@ const SummaryCard = function(props) {
                         container
                         direction="row"
                         justify="space-between"
-                        alignItems="center">                     
+                        alignItems="center">  //SummaryCardTempData.map                   
                             {data.map((item, index) => 
                                 <Grid container item xs={12} spacing={1} key={index}>
                                     <Grid item xs={1}>

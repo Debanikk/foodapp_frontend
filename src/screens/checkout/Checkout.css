@@ -12,9 +12,9 @@
 
 .gridListMain{
     display: flex;
-    flex-wrap:nowrap !important;
+    flex-wrap:wrap !important;
     transform: translateZ(0);
-    height:400px;
+    height:auto;
     width: 1000px !important;
     
     }

@@ -30,6 +30,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import * as Utils from '../../common/Utils';
 import * as Constants from '../../common/Constants';
 
+import sampleCustomerAddressData from '../../common/sampleCustomerAddressData';
+
 
 
 
@@ -86,6 +88,7 @@ const req_header = {
 }
 
 
+
 function TabContainer(props) {
   return (
       <Typography component={'div'} variant={'body2'} style={{ padding: 8 * 3 }}>
@@ -136,10 +139,10 @@ class Checkout extends Component{
 
   componentWillMount(){
     try{
-      this.setState({resDetails:JSON.parse(sessionStorage.getItem("restaurantDetails"))});
-      this.getAddresses(baseURL, access_token);
-      this.getPaymentMethods();
-      this.getStates();
+     // this.setState({resDetails:JSON.parse(sessionStorage.getItem("restaurantDetails"))});
+      //this.getAddresses(baseURL, access_token);
+      //this.getPaymentMethods();
+      //this.getStates();
     } catch {
       this.mounted = false;
     }
@@ -332,10 +335,10 @@ class Checkout extends Component{
         return (
             <div>
                 <AppBar position={"static"}>
-                <Tabs className={this.props.tabs} value={this.state.value} onChange={this.tabChangeHandler}>
-                    <Tab label="Existing Address" />
-                    <Tab label="New Address" />
-                </Tabs>
+                  <Tabs className={this.props.tabs} value={this.state.value} onChange={this.tabChangeHandler}>
+                      <Tab label="Existing Address" />
+                      <Tab label="New Address" />
+                  </Tabs>
                 </AppBar>
                 {this.state.value === 0 && 
                     <TabContainer>
@@ -355,7 +358,6 @@ class Checkout extends Component{
                             </GridList>  
                           </Grid>
                         </Grid>
-                        
                         :
                     <Grid
                       container
@@ -364,9 +366,8 @@ class Checkout extends Component{
                       alignItems="center"
                       className={this.props.root}
                       >
-                        <Grid container spacing={10}>
                           <GridList cellHeight={"auto"} className="gridListMain">
-                            {
+                            { //sampleCustomerAddressData
                               this.state.dataAddress.map((val, idx) => ( 
                                 <Grid item xs={4} key={val.id}>
                                   <CustomerAddress address={val} key={val.id + "_" + idx} changeAddress={this.addressChangeHandler}/>                                 
@@ -374,10 +375,10 @@ class Checkout extends Component{
                             ))            
                             }
                           </GridList>
-                      </Grid>
-                    </Grid>}
+                    </Grid>
+                }
                     </TabContainer>
-                },
+                }
                 {this.state.value === 1 && 
                     <TabContainer>
                         <div className="newAddress">                            

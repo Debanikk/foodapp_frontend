@@ -57,11 +57,11 @@ function CustomerAddress( props ) {
     
   return (    
     <div className="App">
-      <Card className={classes.card} key={address.id}>
+      <Card className="summaryCardMain" key={address.id}>
         <CardContent className={classes.content}>
           <Typography
             style={{width:"100%",textTransform:"capitalize"}}
-            variant={"h6"}
+            variant={"body2"}
             gutterBottom
           >
             {address.flat_building_name} <br /> {address.locality} <br />
@@ -71,7 +71,7 @@ function CustomerAddress( props ) {
           </Typography>          
           <Divider className={classes.divider} light />          
         </CardContent>
-        <CardActions disableSpacing className={classes.CardAction}>
+        <CardActions className={classes.CardAction}>
           <IconButton className="selectAddresscircle" aria-label="Select Address" onClick={() => onAddressClick(address) }>            
             {address.id === sessionStorage.getItem("selected") ? <CheckCircle  style={{color:"#009000"}}/> : <CheckCircle style={{color:"#999999"}} />}            
           </IconButton>
