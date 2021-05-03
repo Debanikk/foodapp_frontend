@@ -56,38 +56,36 @@ class Details extends Component {
    
     let newState = this.state;
     let data = null   
-    let xhrAddresses = new XMLHttpRequest();
+    let xhr_resDetails = new XMLHttpRequest();
     let that = this;    
     sessionStorage.setItem("selRestaurant",this.props.match.params.id);
-    xhrAddresses.addEventListener("readystatechange", function () {  
+    //sessionStorage.setItem("selRestaurant","246165d2-a238-11e8-9077-720006ceb890");
+    xhr_resDetails.addEventListener("readystatechange", function () {  
         if (this.readyState === 4) {                                      
-              newState.restaurantData = JSON.parse(xhrAddresses.response); 
+              newState.restaurantData = JSON.parse(xhr_resDetails.response); 
            
            
             let { categories } = newState.restaurantData;
             let {address} = newState.restaurantData;
             newState.categoriesList=categories;
             newState.address=address;
-    categories.map(function(cat){
-    newState.categories.push(cat.category_name+" ")
-  })
+            categories.map(function(cat){
+            newState.categories.push(cat.category_name+" ")
+        })
             that.setState(newState)
             
               
         }
     })
-  
-    xhrAddresses.open("GET", baseURL + "restaurant/"+this.props.match.params.id+"/");
-    //let id = "1dd86f90-a296-11e8-9a3a-720006ceb890"
-    //xhrAddresses.open("GET", baseURL + "restaurant/"+id);
-    xhrAddresses.setRequestHeader("Authorization", "Bearer " + access_token); //sessionStorage.getItem('access-token')
-    xhrAddresses.setRequestHeader("Content-Type", "application/json");
-    xhrAddresses.setRequestHeader("Cache-Control", "no-cache");
-    xhrAddresses.setRequestHeader("Access-Control-Allow-Origin", "*");  
-    xhrAddresses.send(data);
-   
-    
-
+  //console.log("restaurant data " + this.props.match.params.id);
+    //xhr_resDetails.open("GET", baseURL + "restaurant/" + this.props.match.params.id); //+"/"
+    let id = "246165d2-a238-11e8-9077-720006ceb890"
+    xhr_resDetails.open("GET", baseURL + "restaurant/"+id);
+    xhr_resDetails.setRequestHeader("Authorization", "Bearer " + access_token); 
+    xhr_resDetails.setRequestHeader("Content-Type", "application/json");
+    xhr_resDetails.setRequestHeader("Cache-Control", "no-cache");
+    xhr_resDetails.setRequestHeader("Access-Control-Allow-Origin", "*");  
+    xhr_resDetails.send(data);
   }
 
   addItem = (item, id) => {    
@@ -145,12 +143,12 @@ class Details extends Component {
     }else{
       localStorage.setItem("orders",JSON.stringify(this.state.data));
       localStorage.setItem("OrderDataTotal", this.state.total);
-      this.props.history.push("/checkout")
+      this.props.history.push("/Checkout")
     }
   }
   handlePopHere=(id)=>{
     let val;
-    const newData = this.state.data.filter(elem => elem.id != id);
+    const newData = this.state.data.filter(elem => elem.id !== id);
     this.setState({data: newData});
   
   }

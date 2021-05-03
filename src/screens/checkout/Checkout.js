@@ -139,10 +139,10 @@ class Checkout extends Component{
 
   componentWillMount(){
     try{
-     // this.setState({resDetails:JSON.parse(sessionStorage.getItem("restaurantDetails"))});
-      //this.getAddresses(baseURL, access_token);
-      //this.getPaymentMethods();
-      //this.getStates();
+     this.setState({resDetails:JSON.parse(sessionStorage.getItem("selRestaurant"))});
+      this.getAddresses(baseURL, access_token);
+      this.getPaymentMethods();
+      this.getStates();
     } catch {
       this.mounted = false;
     }
