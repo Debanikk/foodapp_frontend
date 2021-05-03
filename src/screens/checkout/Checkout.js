@@ -79,7 +79,7 @@ const styles = foodAppCheckoutBaseTheme => ({
 
 const baseURL = "http://localhost:8080/api/";
 //This needs to be replaced with sessionStorage
-const access_token = "eyJraWQiOiJhMDBhZTJiNi03NmU0LTRhOTItYjU0Ny0yNjhhNzM4M2UwOGYiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJhYjU5OTNkMS04MmJjLTQxY2UtYjRkMS1jMmE1MGEyMTMwMGUiLCJpc3MiOiJodHRwczovL0Zvb2RPcmRlcmluZ0FwcC5pbyIsImV4cCI6MTYxOTkzMCwiaWF0IjoxNjE5OTAxfQ.B6xdGWQ-IGHKteUPKXI0Qe-16GWwffUuVkr5TeEj_OT95vALLcrPgw7A6aZN7MHr__lMMd-ZX51gOaUBqMQZhw"; //sessionStorage.getItem("access-token");
+const access_token = sessionStorage.getItem("access-token");
 const req_header = {
   "Accept": "application/json;charset=UTF-8",
   "authorization": "Bearer " +  access_token,

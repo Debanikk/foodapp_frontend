@@ -3,7 +3,7 @@
  * @param val value to be tested
  * @returns TRUE if the val is undefined or null; FALSE otherwise
  */
-export const isUndefinedOrNull = val => {
+ export const isUndefinedOrNull = val => {
   return val === undefined || val === null;
 };
 
@@ -116,4 +116,3 @@ export const makeApiCall = (
     }
   });
 };
-

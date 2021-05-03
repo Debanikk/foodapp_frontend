@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import Home from "../screens/home/Home";
+import Checkout from "../screens/checkout/Checkout"
+import Details from '../screens/details/Details';
  
 
 class Controller extends Component {
@@ -18,7 +20,7 @@ class Controller extends Component {
             <Router>
                 <div className= "main-container">
                     <Route exact path="/" render={props=> <Home {...props} baseUrl={this.baseUrl}/>} />
-           
+                    <Route exact path="/details" render={props=> <Details {...props} baseUrl={this.baseUrl}/>} />
                 </div>
             </Router>
 
