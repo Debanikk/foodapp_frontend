@@ -52,7 +52,7 @@ class Details extends Component {
    
   }
 
-  componentWillMount(){
+  componentDidMount(){
    
     let newState = this.state;
     let data = null   
@@ -77,10 +77,11 @@ class Details extends Component {
               
         }
     })
-  //console.log("restaurant data " + this.props.match.params.id);
-    //xhr_resDetails.open("GET", baseURL + "restaurant/" + this.props.match.params.id); //+"/"
-    let id = "246165d2-a238-11e8-9077-720006ceb890"
-    xhr_resDetails.open("GET", baseURL + "restaurant/"+id);
+    // console.log(this.state);
+    // console.log("restaurant data " + this.props.match.params.id);
+    xhr_resDetails.open("GET", baseURL + "restaurant/" + this.props.match.params.id); //+"/"
+    //let id = "246165d2-a238-11e8-9077-720006ceb890"
+    xhr_resDetails.open("GET", baseURL + "restaurant/"+this.props.match.params.id);
     xhr_resDetails.setRequestHeader("Authorization", "Bearer " + access_token); 
     xhr_resDetails.setRequestHeader("Content-Type", "application/json");
     xhr_resDetails.setRequestHeader("Cache-Control", "no-cache");
